@@ -89,7 +89,7 @@
 
             <div class="modal-footer">
                 <input type="hidden" name="id_soli" value="{{$doc->id}}" readonly>
-                <button type="submit" class="btn btn-primary  waves-effect waves-float waves-light" name="accion" value="guardar">Guardar</button>
+                {{-- <button type="submit" class="btn btn-primary  waves-effect waves-float waves-light" name="accion" value="guardar">Guardar</button> --}}
                 <button type="submit" class="btn btn-success  waves-effect waves-float waves-light" name="accion" value="finalizar">Finalizar</button>
               </div>
             </form>

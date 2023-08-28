@@ -1138,7 +1138,7 @@ class AdminController extends Controller
             // echo $key;
             if ($image = $request->file('guia' . $key)) {
                 $destinatarioPath = 'pdfs-guias/';
-                $firmaImage = date('mdHis') .$key. "." . $image->getClientOriginalExtension();
+                $firmaImage = date('mdHis') . $key . "." . $image->getClientOriginalExtension();
                 $image->move($destinatarioPath, $firmaImage);
                 // $alu['image'] = "$profileImage";
                 $arr[] = $firmaImage;
@@ -1146,7 +1146,7 @@ class AdminController extends Controller
 
             if ($image2 = $request->file('remision' . $key)) {
                 $destinatarioPath2 = 'pdfs-remision/';
-                $firmaImage2 = date('mdHis') .$key. "." . $image2->getClientOriginalExtension();
+                $firmaImage2 = date('mdHis') . $key . "." . $image2->getClientOriginalExtension();
                 $image2->move($destinatarioPath2, $firmaImage2);
                 // $alu['image'] = "$profileImage";
                 $arr2[] = $firmaImage2;
@@ -1439,5 +1439,72 @@ class AdminController extends Controller
         $mensaje = "Asignación de viaticos exitosa";
 
         return redirect()->route('admin.costos.index')->with(['data' => $mensaje]);
+    }
+
+    public function delete_solicitud(Request $request)
+    {
+        $id_soli = $request->get('id');
+        $consulta = DB::table('solicitudes')->where('id', $id_soli)->get();
+
+        foreach ($consulta as $value) {
+            // $id_plani = $value['id_plani'];
+            $id_cierre = $value['id_cierre'];
+            $id_combustible = $value['id_combustible'];
+            $id_balanza = $value['id_balanza'];
+            $id_peaje = $value['id_peaje'];
+            $id_viaticos = $value['id_viaticos'];
+        }
+        // if ($id_plani == 0) {
+        //     # code...
+        // } else {
+        //     $consulta2 =  DB::table('planificaciones')->where('id', $id_plani)->limit(1)->delete();
+        // }
+
+        $solicitudes = DB::table('solicitudes')->orderBy('id', 'desc')->get();
+        $vehiculos = DB::table('vehiculos')->orderBy('id', 'desc')->get();
+        $choferes = DB::table('choferes')->where('tipo_cho', 1)->orderBy('id', 'desc')->get();
+        $ayudantes = DB::table('choferes')->orderBy('id', 'desc')->get();
+        $cierres = DB::table('cierres')->orderBy('id', 'desc')->get();
+        $planificaciones = DB::table('planificaciones')->orderBy('id', 'desc')->get();
+        $destinos = DB::table('destinos')->orderBy('id', 'desc')->get();
+
+        $solicitudes = Solicitude::select(
+            "solicitudes.id as id",
+            "solicitudes.codigo_solicitud as codigo",
+            "solicitudes.fecha_solicitud as fecha",
+            "solicitudes.hora as hora",
+            "solicitudes.hora_cochera as hora_cochera",
+            "solicitudes.cantidad as cantidad",
+            "solicitudes.fecha_traslado as fecha_traslado",
+            "solicitudes.costo as costo",
+            "solicitudes.estado as estado",
+            "solicitudes.datos_destinos as destinos",
+            "solicitudes.id_plani as id_plani",
+            "solicitudes.id_cierre as id_cierre",
+            "solicitudes.id_combustible as id_combustible",
+            "solicitudes.id_balanza as id_balanza",
+            "solicitudes.id_peaje as id_peaje",
+            "solicitudes.id_viaticos as id_viaticos",
+            "solicitudes.lavado as lavado",
+            "solicitudes.comprobante as comprobante",
+            "solicitudes.datos_cantidad as datos_cantidad",
+            "clientes.nombre as nombre_cli",
+            "clientes.referencia as referencia_cli",
+            "solicitudes.created_at",
+            "datos_destinos"
+        )
+            ->join("clientes", "clientes.id", "=", "solicitudes.cliente")
+            ->orderBy('solicitudes.costo', 'desc')
+            ->get();
+
+        return view('admin.solicitudes.index', compact(
+            'solicitudes',
+            'vehiculos',
+            'choferes',
+            'planificaciones',
+            'ayudantes',
+            'destinos',
+            'cierres'
+        ));
     }
 }

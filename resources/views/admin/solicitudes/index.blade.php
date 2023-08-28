@@ -55,6 +55,7 @@
                                 <th>N° COMP.</th> --}}
                                 <th style="font-size: 10px">HORA <br> EN COCHERA</th>
                                 <th style="font-size: 10px">ESTADO</th>
+                                <th style="font-size: 10px">ACCIONES</th>
 
                                 {{-- <th>CIERRE</th> --}}
                                 {{-- <th tyle="font-size: 10px;width: 20px">ACCIONES</th> --}}
@@ -101,10 +102,10 @@
                                     href="{{route('enviar_info_conductor',$doc->id)}}">
                                     <i data-feather='phone'></i> </a>
                                 @elseif ($doc->estado==2) 
-                                    <button type="button" class="btn btn-secondary waves-effect"
+                                    {{-- <button type="button" class="btn btn-secondary waves-effect"
                                     data-bs-toggle="modal" data-bs-target="#editmodal{{$doc->id}}">
                                      Asignación...
-                                    </button>
+                                    </button> --}}
                                 @else
                                     <button type="button" class="btn btn-secondary btn-icon rounded-circle"
                                     data-bs-toggle="modal" data-bs-target="#crearmodal{{$doc->id}}">
@@ -159,11 +160,11 @@
                                 <td>{{$doc->hora_cochera}}</td>
                                 <td>
                                     @if ($doc->estado==1)
-                                    <span class="badge bg-info">Creado</span>
+                                    <span class="badge bg-danger">Creado</span>
                                     @elseif ($doc->estado==3)
-                                    <span class="badge bg-warning">En proceso</span>
+                                    <span class="badge bg-warning">Confirmado</span>
                                     @elseif ($doc->estado==4)
-                                    <span class="badge bg-success">Entregado</span>
+                                    <span class="badge bg-info">Finalizado</span>
                                     @elseif ($doc->estado==5)
                                     <span class="badge bg-primary">Facturado</span>
                                     @else 
@@ -171,25 +172,23 @@
                                     @endif
                                 </td>
                                 
-                                {{-- <td>
+                                <td>
                                     <div class="col-lg-6 col-12">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a type="button" class="btn btn-secondary waves-effect"  href="{{route('detalle-solicitud',$doc->id)}}">
-                                                <i data-feather='eye'></i></a>
-                                            <button type="button" class="btn btn-warning waves-effect">
-                                                <i data-feather='edit'> </i></button>
-                                                <button type="button" class="btn btn-danger waves-effect">
-                                                    <i data-feather='trash-2'></i></button>
+                                            <a type="button" class="btn btn-warning waves-effect">
+                                                <i data-feather='edit'> </i></a>
+                                                <a type="button" class="btn btn-danger waves-effect"
+                                                data-bs-toggle="modal" data-bs-target="#eli{{$doc->id}}">
+                                                    <i data-feather='trash-2'></i></a>
                                           </div>
                                     </div>
-                                   
-                                </td> --}}
+                                </td>
                             </tr>
                             @include('admin.modals.CrearPlani')
                             @include('admin.modals.EditPlani')
                             @include('admin.modals.CrearCierre')
                             @include('admin.modals.DetCierre')
-                           
+                            @include('admin.modals.EliSoli')
                             @endforeach
                         </tbody>
                     </table>
@@ -385,6 +384,7 @@
                             @include('admin.modals.EditPlani')
                             @include('admin.modals.CrearCierre')
                             @include('admin.modals.DetCierre')
+                           
                            
                             @endforeach
                         </tbody>
