@@ -74,6 +74,22 @@
                                         name="indicaciones" rows="3"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="first-name-column">
+                                          KM Inicial</label>
+                                        <input type="number" id="first-name-column"
+                                        class="form-control" name="km_inicial" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="first-name-column">
+                                          KM Final</label>
+                                        <input type="number" id="first-name-column"
+                                        class="form-control" name="km_final" required>
+                                    </div>
+                                </div>
                         </div>
             </div>
 

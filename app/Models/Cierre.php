@@ -13,8 +13,8 @@ class Cierre extends Model
         'n_guias',
         'datos_remision',
         'n_remision',
-        'indicaciones'
-        // 'fecha_fac',
-        // 'n_fac'
+        'indicaciones',
+        'km_inicial',
+        'km_final'
     ];
 }

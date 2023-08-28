@@ -20,16 +20,345 @@
         </div>
     </div>
     {{-- --}}
+    @if (Auth::user()->tipo==1 || Auth::user()->tipo==2)
     <div class="content-header-left text-md-end col-md-3 col-12 d-md-block d-none">
         <div class="mb-1 breadcrumb-left">
             <a href="{{route('admin.solicitudes.nueva-solicitud')}}" type="button" class="btn btn-danger waves-effect waves-float waves-light">Agregar +</a>
+    
         </div>
+       
     </div>
+    @else
+    @endif
 </div>
 
 
 <div class="content-body">
     @if (Auth::user()->tipo==1 || Auth::user()->tipo==2)
+    <div class="table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-sm" 
+                    id="tablamaestro" style="display: none ">
+                        <thead class="text-center">
+                            <tr>
+                                {{-- <th>ID</th> --}}
+                                {{-- <th>CODIGO SOLICITUD</th> --}}
+                                <th style="font-size: 10px">FECHA <br> TRASLADO</th>
+                                <th style="font-size: 10px">CLIENTE</th>
+                                <th style="font-size: 10px">HORA <br> EN GRANJA</th>
+                                <th style="font-size: 10px">CANTIDAD <br> TOTAL</th>
+                                <th style="font-size: 10px">ORIGEN</th>
+                                <th style="font-size: 10px">ORIGEN 2</th>
+                                <th style="font-size: 10px;width: 40px">DESTINOS</th>
+                                <th style="font-size: 10px;width: 40px">UNIDAD</th>
+                                <th style="font-size: 10px;width: 40px">PLACA</th>
+                                <th style="font-size: 10px;width: 40px">CHOFER</th>
+                                <th style="font-size: 10px;width: 40px">AYUDANTE</th>
+                                
+                                <th style="font-size: 10px;width: 40px">JORNADA DE AYUDANTE</th>
+                                <th style="font-size: 10px;width: 40px">LAVADO</th>
+                                <th style="font-size: 10px;width: 40px">N° COMPROBANTE</th>
+                                <th style="font-size: 10px;width: 40px">INDICACIONES ESPECIALES</th>
+                                <th style="font-size: 10px;width: 40px">OBSERVACIONES FINAL DEL VIAJE</th>
+                                <th style="font-size: 10px">HORA DE SALIDA EN COCHERA</th>
+                                <th style="font-size: 10px;width: 40px">GUIA DE TERCEROS</th>
+                                <th style="font-size: 10px;width: 40px">GUIA DE TRANSPORTISTA</th>
+                                <th style="font-size: 10px;width: 40px">GUIA DE CLIENTE </th>
+
+                                <th style="font-size: 10px;width: 40px">REVISADO POR</th>
+                                <th style="font-size: 10px;width: 40px">PAGO DE CHOFER</th>
+                                <th style="font-size: 10px;width: 40px">PAGO AYUDANTE</th>
+                                <th style="font-size: 10px;width: 40px">DEVOLUCION DE GASTOS AL CONDUCTOR (**)</th>
+                                <th style="font-size: 10px;width: 40px">DEVOLUCION PTA HERMOSA (GLH)</th>
+                                <th style="font-size: 10px;width: 40px">CAJA CHICA - MIGUEL</th>
+                                <th style="font-size: 10px;width: 40px">CAJA GT</th>
+                                <th style="font-size: 10px;width: 40px">PEAJE TOTAL</th>
+                                <th style="font-size: 10px;width: 40px">PEAJE E-PASS</th>
+                                <th style="font-size: 10px;width: 40px">PEAJE PEX</th>
+                                <th style="font-size: 10px;width: 40px">PEAJE EASY WAY</th>
+                                <th style="font-size: 10px;width: 40px">OTRO PEAJES(**)</th>
+                                <th style="font-size: 10px;width: 40px">BALANZA2</th>
+
+                                <th style="font-size: 10px;width: 40px">GASTOS (EXTRAS)(**)</th>
+                                <th style="font-size: 10px;width: 40px">CONTEXTO GASTO EXTRA</th>
+                                <th style="font-size: 10px;width: 40px">LAVADERO (INICIO DE LAVADO)</th>
+                                <th style="font-size: 10px;width: 40px">TURNO</th>
+                                <th style="font-size: 10px;width: 40px">COSTO LAVADO Y DESINFECCION</th>
+
+                                <th style="font-size: 10px;width: 40px">CANTIDAD DE COMBUSTIBLE RECARGADO</th>
+                                <th style="font-size: 10px;width: 40px">PRECIO DEL COMBUSTIBLE</th>
+                                <th style="font-size: 10px;width: 40px">COMBUSTIBLE RECARGADO</th>
+                                <th style="font-size: 10px;width: 40px">CANTIDAD DE COMBUSTIBLE CONSUMIDO</th>
+                                <th style="font-size: 10px;width: 40px">COMBUSTIBLE CONSUMIDO</th>
+                                <th style="font-size: 10px;width: 40px">GASTOS TOTAL</th>
+                                <th style="font-size: 10px;width: 40px">FECHA FACTURACION</th>
+                                <th style="font-size: 10px;width: 40px">N° FACTURA</th>
+                                <th style="font-size: 10px;width: 40px">FACTURADO</th>
+
+                                <th style="font-size: 10px;width: 40px">KM INICIAL</th>
+                                <th style="font-size: 10px;width: 40px">HORA INICIAL</th>
+                                <th style="font-size: 10px;width: 40px">KM FINAL</th>
+                                <th style="font-size: 10px;width: 40px">HORA FINAL</th>
+                                <th style="font-size: 10px;width: 40px">KM RECORRIDO</th>
+                                <th style="font-size: 10px;width: 40px">OBSERVACIONES</th>
+                                {{-- <th>LAVADO</th>
+                                <th>N° COMP.</th> --}}
+                             
+                                <th style="font-size: 10px">ESTADO</th>
+
+                                {{-- <th>CIERRE</th> --}}
+                                {{-- <th tyle="font-size: 10px;width: 20px">ACCIONES</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($solicitudes as $doc)
+                            
+                            <tr style="font-size: 12px;"> 
+                                {{-- <td>{{$doc->codigo}}</td> --}}
+                                @php
+                                $fecha= $doc->fecha_traslado;
+                                $date = new DateTime($fecha);    
+                                @endphp
+                                <td><strong>{{$date->format('d-m-Y')}}</strong></td>
+                                <td style="font-size: 12px"><strong>{{$doc->nombre_cli}}</strong></td>
+                                <td><strong>{{$doc->hora}}</strong></td>
+                                <td>{{$doc->cantidad}}</td>
+                                <td>{{$doc->referencia_cli}}</td>
+                                <td> -</td>
+                                <td> 
+                                    @foreach (json_decode($doc->destinos) as $item)
+                                    @foreach ($destinos as $des)
+                                        @if ($des->id==$item)
+                                        {{$des->referencia}} <br>
+                                       
+                                        @else
+                                        @endif
+                                    @endforeach
+                                    @endforeach
+                                    @php
+                                    @endphp
+                                </td>
+                                {{-- <td  style="visibility:collapse; display:none;"> {{$doc->observaciones}}</td> --}}
+                               
+                                    @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
+                                        @foreach ($planificaciones as $pla)
+                                                @if ($pla->id ==$doc->id_plani)
+                                                    @foreach ($vehiculos as $uni)
+
+                                                        @if ($uni->id==$pla->id_unidad)
+                                                        {{-- UNIDAD --}}
+                                                       <td>  {{$uni->unidad}} </td>
+                                                       <td>  {{$uni->placa}} </td>
+                                                        @else
+                                                        @endif
+                                                    @endforeach
+                                                   
+                                                    @foreach ($choferes as $ch)
+                                                        @if ($ch->id==$pla->id_chofer)
+                                                          <td>  {{$ch->nombres_cho}} <br> {{$ch->apellidos_cho}}</td>
+                                                        @else
+                                                        @endif
+                                                    @endforeach
+                                                   
+                                                @else
+                                                @endif
+                                        @endforeach
+                                    @else
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                   
+
+                                    @endif
+                                <td>
+                                    @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
+                                        @foreach ($planificaciones as $pla)
+                                            @if ($pla->id ==$doc->id_plani)
+                                                        @foreach ($ayudantes as $ayu)
+                                                            @if ($ayu->id==$pla->choferes)
+                                                            {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}
+                                                            @else
+                                                            @endif
+                                                        @endforeach
+                                                    - <strong>{{$pla->tipo_des}}</strong>
+                                            @else
+                                            @endif
+                                        @endforeach
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                                <td>-</td>
+                                <td>{{$doc->lavado}}</td>
+                                <td>{{$doc->comprobante}}</td>
+                                <td>
+                                    @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
+                                        @foreach ($planificaciones as $pla)
+                                            @if ($pla->id ==$doc->id_plani)
+                                                 {{$pla->observaciones}}
+                                            @else
+                                            @endif
+                                        @endforeach
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                                <td>-</td>
+                                {{-- GUIAS --}}
+                                
+                                <td>{{$doc->hora_cochera}}</td>
+                                <td>-</td>
+                               
+                                    @foreach ($cierres as $item)
+                                    {{-- @foreach ($item->datos_guias as $des) --}}
+                                        @if ($doc->id_cierre==$item->id)
+                                                              @php
+                                                            $datos_n_guias = json_decode($item->n_guias, true);
+                                                            $datos_n_remision = json_decode($item->n_remision, true);
+                                                            @endphp
+                                                <td>
+                                                    @foreach ($datos_n_guias as $item)
+                                                    {{$item}} <br>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @foreach ($datos_n_remision as $item2)
+                                                    {{$item2}} <br>
+                                                    @endforeach
+                                                </td>
+                                        @else
+                                        <td>-</td>
+                                        <td>-</td>
+                                        @endif
+                                    @endforeach
+                               
+                                {{-- FIN GUIAS --}}
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    @if ($doc->id_peaje==0)
+                                    0.00
+                                    @else
+                                        @foreach ($peajes as $item)
+                                        {{-- @foreach ($item->datos_guias as $des) --}}
+                                            @if ($doc->id_peaje==$item->id)
+                                                {{$item->costo_total}}  
+                                            @else
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>
+                                    @if ($doc->id_balanza==0)
+                                    0.00
+                                    @else
+                                        @foreach ($balanzas as $ba)
+                                        {{-- @foreach ($item->datos_guias as $des) --}}
+                                            @if ($doc->id_balanza==$ba->id)
+                                                {{$ba->costo_total}}  
+                                            @else
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                                {{-- FIN DE BALANAZAS --}}
+                                <td>0.00</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                {{-- COMBUSTIBLES --}}
+                                @if ($doc->id_combustible==0)
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                @else
+                                        @foreach ($combustibles as $co)
+                                        {{-- @foreach ($item->datos_guias as $des) --}}
+                                            @if ($doc->id_combustible==$co->id)
+                                            <td>
+                                                {{$co->cant_1re}} <br>
+                                                {{$co->cant_2re}} 
+                                                
+                                            </td>
+                                            <td>
+                                                {{$co->precio_1re}} <br>
+                                                {{$co->precio_2re}} 
+                                            </td>
+                                            <td>
+                                                {{$co->recarga1}} <br>
+                                                {{$co->recarga2}} 
+                                            </td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>{{$co->fecha_fac}}</td>
+                                            <td>{{$co->n_fac}}</td>
+                                            <td>-</td>  
+                                            @else
+                                            @endif
+                                        @endforeach
+                                @endif
+                                
+                                @if ($doc->id_cierre==0)
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                @else
+                                        @foreach ($cierres as $cie)
+                                       
+                                            @if ($doc->id_cierre==$cie->id)
+                                            <td>{{$cie->km_inicial}} </td>
+                                            <td>-</td>
+                                            <td>{{$cie->km_final}} </td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            @else
+                                            @endif
+                                        @endforeach
+                                @endif
+                                
+                                {{-- FIN DE COMBUSTIBLES --}}
+                                <td>
+                                    @if ($doc->estado==1)
+                                    <span class="badge bg-danger">Creado</span>
+                                    @elseif ($doc->estado==3)
+                                    <span class="badge bg-warning">Confirmado</span>
+                                    @elseif ($doc->estado==4)
+                                    <span class="badge bg-info">Finalizado</span>
+                                    @elseif ($doc->estado==5)
+                                    <span class="badge bg-primary">Facturado</span>
+                                    @else 
+                                    <span class="badge bg-danger">Pendiente Asig.</span>
+                                    @endif
+                                </td>
+                                
+                            </tr>
+                            
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+    </div>    
     <!-- Basic Tables start -->
     <div class="row" id="basic-table">
         <div class="col-12">
@@ -46,6 +375,7 @@
                                 <th style="font-size: 10px">CANTIDAD <br> TOTAL</th>
                                 <th style="font-size: 10px">ORIGEN</th>
                                 <th style="font-size: 10px;width: 40px">DESTINOS</th>
+                                {{-- <th style="font-size: 10px;width: 40px; display:none;">OBSERVACIONES</th> --}}
                                 <th style="font-size: 10px;width: 40px">ASIGNAR</th>
                                 <th style="font-size: 10px;width: 40px">UNIDAD</th>
                                 <th style="font-size: 10px;width: 40px">PLACA</th>
@@ -89,12 +419,7 @@
                                     @php
                                     @endphp
                                 </td>
-                                {{-- <td>{{$doc->fecha_traslado}}</td> --}}
-                                {{-- <td>{{$doc->origen}}</td> --}}
-                                
-                               
-                                {{-- <td>{{$doc->costo}}</td> --}}
-                                
+                                {{-- <td  style="visibility:collapse; display:none;"> {{$doc->observaciones}}</td> --}}
                                <td>
                                 @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
                                     <a type="button" class="btn btn-icon btn-icon rounded-circle
@@ -135,9 +460,9 @@
                                                 @endif
                                         @endforeach
                                     @else
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
                                     @endif
                                 <td>
                                     @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
@@ -150,10 +475,11 @@
                                                             @endif
                                                         @endforeach
                                                     - <strong>{{$pla->tipo_des}}</strong>
-                                             
                                             @else
                                             @endif
                                         @endforeach
+                                    @else
+                                    -
                                     @endif
                                 </td>
                                 {{-- <td>{{$doc->lavado}}</td> --}}
@@ -171,24 +497,31 @@
                                     <span class="badge bg-danger">Pendiente Asig.</span>
                                     @endif
                                 </td>
-                                
                                 <td>
                                     <div class="col-lg-6 col-12">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a type="button" class="btn btn-warning waves-effect">
+                                                @if ($doc->estado==1)
+                                                <button type="button" class="btn btn-icon btn-warning waves-effect waves-float waves-light"
+                                                disabled>
+                                                <i data-feather='edit'> </i></button>
+                                                @else
+                                                <a type="button" class="btn btn-icon btn-warning waves-effect waves-float waves-light"
+                                                data-bs-toggle="modal" data-bs-target="#editmodal{{$doc->id}}">
                                                 <i data-feather='edit'> </i></a>
-                                                <a type="button" class="btn btn-danger waves-effect"
+                                                @endif
+                                                <a type="button" class="btn btn-icon btn-danger waves-effect waves-float waves-light"
                                                 data-bs-toggle="modal" data-bs-target="#eli{{$doc->id}}">
                                                     <i data-feather='trash-2'></i></a>
                                           </div>
                                     </div>
                                 </td>
                             </tr>
+                            @include('admin.modals.EliSoli')
                             @include('admin.modals.CrearPlani')
                             @include('admin.modals.EditPlani')
                             @include('admin.modals.CrearCierre')
                             @include('admin.modals.DetCierre')
-                            @include('admin.modals.EliSoli')
+                            
                             @endforeach
                         </tbody>
                     </table>
@@ -196,6 +529,10 @@
             </div>
         </div>
     </div>
+
+    {{-- Tabla maestra --}}
+    
+
     <!-- Basic Tables end -->
     @elseif (Auth::user()->tipo==3)
      <!-- Basic Tables start -->
@@ -366,11 +703,11 @@
                                 
                                 <td>
                                     @if ($doc->estado==1)
-                                    <span class="badge bg-info">Creado</span>
+                                    <span class="badge bg-danger">Creado</span>
                                     @elseif ($doc->estado==3)
-                                    <span class="badge bg-warning">En proceso</span>
+                                    <span class="badge bg-warning">Confirmado</span>
                                     @elseif ($doc->estado==4)
-                                    <span class="badge bg-success">Entregado</span>
+                                    <span class="badge bg-info">Finalizado</span>
                                     @elseif ($doc->estado==5)
                                     <span class="badge bg-primary">Facturado</span>
                                     @else 
@@ -565,11 +902,11 @@
                                     @endif
                                 <td>
                                     @if ($doc->estado==1)
-                                    <span class="badge bg-info">Creado</span>
+                                    <span class="badge bg-danger">Creado</span>
                                     @elseif ($doc->estado==3)
-                                    <span class="badge bg-warning">En proceso</span>
+                                    <span class="badge bg-warning">Confirmado</span>
                                     @elseif ($doc->estado==4)
-                                    <span class="badge bg-success">Entregado</span>
+                                    <span class="badge bg-info">Finalizado</span>
                                     @elseif ($doc->estado==5)
                                     <span class="badge bg-primary">Facturado</span>
                                     @else 
@@ -662,8 +999,6 @@ $( function() {
     }
 };
 
-
-
 //Convierte el div a imagen y la descarga
 document.querySelector('button').addEventListener('click', function() {
   
@@ -748,6 +1083,45 @@ var idioma=
                 }
             }
         };
+        var idioma2=
+
+{
+    "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "NingÃºn dato disponible en esta tabla",
+    "sInfo":           "",
+    "sInfoEmpty":      "",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Buscar:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Ãšltimo",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    },
+    "buttons": {
+        "copyTitle": 'Informacion copiada',
+        "copyKeys": 'Use your keyboard or menu to select the copy command',
+        "copySuccess": {
+            "_": '%d filas copiadas al portapapeles',
+            "1": '1 fila copiada al portapapeles'
+        },
+
+        "pageLength": {
+        "_": "Mostrar %d filas",
+        "-1": "Mostrar Todo"
+        }
+    }
+};
 
         $(document).ready( function () {
         var table = $('#solicitudes').DataTable({
@@ -768,7 +1142,36 @@ var idioma=
                         exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12] }
                         },
                     ],
-                    "order": [[ 4, 'asc' ], [ 5, 'asc' ]],
+                    "order": [[ 0, 'desc' ], [ 2, 'asc' ]],
+                    exportOptions: {
+                    modifier: {
+                    // DataTables core
+                    // 'current', 'applied',
+                    //'index', 'original'
+                    page: 'all', // 'all', 'current'
+                    search: 'none' // 'none', 'applied', 'removed'
+                    },
+                        columns: [0,1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12]
+                        
+                    }
+                })
+
+        } );
+        $(document).ready( function () {
+        var table = $('#tablamaestro').DataTable({
+                    dom:'Brt<"col-md-6 inline"i> <"col-md-6 inline">',
+                    language: idioma2,
+                    buttons: [
+                    // 'excel'
+                        {
+                        extend: 'excel',
+                        text: feather.icons['file'].toSvg({ class: 'font-small-4 me-50' }) + 'Excel Maestro',
+                        className: 'btn btn-sm btn-success round waves-effect',
+                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12] }
+                        }
+
+                    ],
+                    "order": [[ 0, 'desc' ], [ 2, 'asc' ]],
                     exportOptions: {
                     modifier: {
                     // DataTables core
@@ -854,4 +1257,3 @@ var idioma=
         } );
 </script>
 @endsection
-

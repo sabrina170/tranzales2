@@ -81,9 +81,23 @@
                                                                 </div>
                                                             @endfor
                                                         
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <h4> Indicaciones Especiales: </h4>
                                                       {{$item->indicaciones}}
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="mb-1">
+                                                            <h4 class="form-label" for="first-name-column">
+                                                              KM Inicial</h4>
+                                                              {{$item->km_inicial}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 col-12">
+                                                        <div class="mb-1">
+                                                            <h4 class="form-label" for="first-name-column">
+                                                              KM Final</h4>
+                                                              {{$item->km_final}}
+                                                        </div>
                                                     </div>
                                         </div>
                                                     @else

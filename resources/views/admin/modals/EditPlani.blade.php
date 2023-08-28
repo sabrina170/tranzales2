@@ -37,10 +37,8 @@
                             <select class="form-select" name="ayudantes" required>
                                
                                 @foreach ($ayudantes as $ayu)
-                                            @if ($ayu->id == $pla->choferes) 
-                                                <option value="{{$ayu->id}}" selected> {{$ayu->nombres_cho}}- {{$ayu->dni_cho}}</option>
-                                            @else
-                                        @endif
+                                <option value="{{$ayu->id}}" @if($ayu->id == $pla->choferes) selected @endif> {{$ayu->nombres_cho}}- {{$ayu->dni_cho}}</option>
+                                           
                                 @endforeach   
                             </select>
                         </div>
@@ -87,8 +85,9 @@
                 <input type="hidden" name="id_plani" value="{{$doc->id_plani}}" readonly>
                 <button type="submit" class="btn btn-warning 
                  waves-effect waves-float waves-light" name="accion" value="actualizar">Actualizar</button>
-                <button type="submit" class="btn btn-success 
-                 waves-effect waves-float waves-light" name="accion" value="finalizar2">Finalizar</button>
+
+                {{-- <button type="submit" class="btn btn-success 
+                 waves-effect waves-float waves-light" name="accion" value="finalizar2">Finalizar</button> --}}
               </div>
               @endif
               @endforeach

@@ -41,18 +41,22 @@
                                                     $datos_destinos2 = json_decode($doc->datos_destinos, true);   
                                                     $datos_cantidad2 = json_decode($doc->datos_cantidad, true);   
                                                    $cont = count($datos_destinos2);
+
+                                                    $fecha= $doc->fecha_traslado;
+                                                    $date = new DateTime($fecha); 
                                                     @endphp
+                                                     
                                                     <tr>
                                                         <td class="table-light">
-                                                            <strong>FECHA</strong>
+                                                            <strong>FECHA TRANSLADO</strong>
                                                         </td>
-                                                        <td colspan="{{$cont}}"><strong>{{$doc->fecha}}</strong></td>
+                                                        <td colspan="{{$cont}}"><strong>{{$date->format('d-m-Y')}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="table-warning">
                                                             <strong>HORA EN COCHERA</strong>
                                                         </td>
-                                                        <td class="table-warning" colspan="{{$cont}}"><strong>{{$doc->hora}}</strong></td>
+                                                        <td class="table-warning" colspan="{{$cont}}"><strong>{{$doc->hora_cochera}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="table-light">

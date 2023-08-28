@@ -35,6 +35,11 @@ class AdminController extends Controller
         $planificaciones = DB::table('planificaciones')->orderBy('id', 'desc')->get();
         $destinos = DB::table('destinos')->orderBy('id', 'desc')->get();
 
+        $combustibles = DB::table('combustibles')->orderBy('id', 'desc')->get();
+        $balanzas = DB::table('balanzas')->orderBy('id', 'desc')->get();
+        $peajes = DB::table('peajes')->orderBy('id', 'desc')->get();
+        $viaticos = DB::table('viaticos')->orderBy('id', 'desc')->get();
+
         $solicitudes = Solicitude::select(
             "solicitudes.id as id",
             "solicitudes.codigo_solicitud as codigo",
@@ -71,7 +76,11 @@ class AdminController extends Controller
             'planificaciones',
             'ayudantes',
             'destinos',
-            'cierres'
+            'cierres',
+            'combustibles',
+            'balanzas',
+            'peajes',
+            'viaticos'
         ));
     }
 
@@ -1040,6 +1049,7 @@ class AdminController extends Controller
             "solicitudes.codigo_solicitud as codigo",
             "solicitudes.fecha_solicitud as fecha",
             "solicitudes.hora as hora",
+            "solicitudes.hora_cochera as hora_cochera",
             "solicitudes.cantidad as cantidad",
             "solicitudes.fecha_traslado as fecha_traslado",
             "solicitudes.costo as costo",
@@ -1163,8 +1173,8 @@ class AdminController extends Controller
             'n_guias' => json_encode($n_gruias, true),
             'datos_remision' => json_encode($arr2, true),
             'n_remision' => json_encode($n_remision, true),
-            // 'fecha_fac'  => $fecha_fac,
-            // 'n_fac'  => $n_fac,
+            'km_inicial'  => $request->get('km_inicial'),
+            'km_final'  => $request->get('km_final'),
             'indicaciones'  => $indicaciones
         ];
         // dd($data);
@@ -1447,64 +1457,41 @@ class AdminController extends Controller
         $consulta = DB::table('solicitudes')->where('id', $id_soli)->get();
 
         foreach ($consulta as $value) {
-            // $id_plani = $value['id_plani'];
-            $id_cierre = $value['id_cierre'];
-            $id_combustible = $value['id_combustible'];
-            $id_balanza = $value['id_balanza'];
-            $id_peaje = $value['id_peaje'];
-            $id_viaticos = $value['id_viaticos'];
+            $id_plani = $value->id_plani;
+            $id_cierre = $value->id_cierre;
+            $id_combustible = $value->id_combustible;
+            $id_balanza = $value->id_balanza;
+            $id_peaje = $value->id_peaje;
+            $id_viaticos = $value->id_viaticos;
         }
-        // if ($id_plani == 0) {
-        //     # code...
-        // } else {
-        //     $consulta2 =  DB::table('planificaciones')->where('id', $id_plani)->limit(1)->delete();
-        // }
+        if ($id_plani == 0) {
+        } else {
+            $consulta2 =  DB::table('planificaciones')->where('id', $id_plani)->limit(1)->delete();
+        }
+        if ($id_cierre == 0) {
+        } else {
+            $consulta3 =  DB::table('cierres')->where('id', $id_cierre)->limit(1)->delete();
+        }
+        if ($id_combustible == 0) {
+        } else {
+            $consulta4 =  DB::table('combustibles')->where('id', $id_combustible)->limit(1)->delete();
+        }
+        if ($id_balanza == 0) {
+        } else {
+            $consulta5 =  DB::table('balanzas')->where('id', $id_balanza)->limit(1)->delete();
+        }
+        if ($id_peaje == 0) {
+        } else {
+            $consulta6 =  DB::table('peajes')->where('id', $id_peaje)->limit(1)->delete();
+        }
+        if ($id_viaticos == 0) {
+        } else {
+            $consulta7 =  DB::table('viaticos')->where('id', $id_viaticos)->limit(1)->delete();
+        }
 
-        $solicitudes = DB::table('solicitudes')->orderBy('id', 'desc')->get();
-        $vehiculos = DB::table('vehiculos')->orderBy('id', 'desc')->get();
-        $choferes = DB::table('choferes')->where('tipo_cho', 1)->orderBy('id', 'desc')->get();
-        $ayudantes = DB::table('choferes')->orderBy('id', 'desc')->get();
-        $cierres = DB::table('cierres')->orderBy('id', 'desc')->get();
-        $planificaciones = DB::table('planificaciones')->orderBy('id', 'desc')->get();
-        $destinos = DB::table('destinos')->orderBy('id', 'desc')->get();
+        $eliminar =  DB::table('solicitudes')->where('id', $id_soli)->limit(1)->delete();
 
-        $solicitudes = Solicitude::select(
-            "solicitudes.id as id",
-            "solicitudes.codigo_solicitud as codigo",
-            "solicitudes.fecha_solicitud as fecha",
-            "solicitudes.hora as hora",
-            "solicitudes.hora_cochera as hora_cochera",
-            "solicitudes.cantidad as cantidad",
-            "solicitudes.fecha_traslado as fecha_traslado",
-            "solicitudes.costo as costo",
-            "solicitudes.estado as estado",
-            "solicitudes.datos_destinos as destinos",
-            "solicitudes.id_plani as id_plani",
-            "solicitudes.id_cierre as id_cierre",
-            "solicitudes.id_combustible as id_combustible",
-            "solicitudes.id_balanza as id_balanza",
-            "solicitudes.id_peaje as id_peaje",
-            "solicitudes.id_viaticos as id_viaticos",
-            "solicitudes.lavado as lavado",
-            "solicitudes.comprobante as comprobante",
-            "solicitudes.datos_cantidad as datos_cantidad",
-            "clientes.nombre as nombre_cli",
-            "clientes.referencia as referencia_cli",
-            "solicitudes.created_at",
-            "datos_destinos"
-        )
-            ->join("clientes", "clientes.id", "=", "solicitudes.cliente")
-            ->orderBy('solicitudes.costo', 'desc')
-            ->get();
-
-        return view('admin.solicitudes.index', compact(
-            'solicitudes',
-            'vehiculos',
-            'choferes',
-            'planificaciones',
-            'ayudantes',
-            'destinos',
-            'cierres'
-        ));
+        $mensaje = "Solicitud eliminada correctamente";
+        return redirect()->route('admin.solicitudes.index')->with(['data' => $mensaje]);
     }
 }
