@@ -422,10 +422,13 @@
                                 {{-- <td  style="visibility:collapse; display:none;"> {{$doc->observaciones}}</td> --}}
                                <td>
                                 @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
-                                    <a type="button" class="btn btn-icon btn-icon rounded-circle
+                                    <a type="button" class="btn  btn-icon rounded-circle
                                     btn-success waves-effect waves-float waves-light"
                                     href="{{route('enviar_info_conductor',$doc->id)}}">
                                     <i data-feather='phone'></i> </a>
+                                    <a type="button" class="btn btn-icon btn-icon rounded-circle btn-flat-success waves-effect"
+                                    data-bs-toggle="modal" data-bs-target="#editmodal{{$doc->id}}">
+                                    <i data-feather='edit'> </i></a>
                                 @elseif ($doc->estado==2) 
                                     {{-- <button type="button" class="btn btn-secondary waves-effect"
                                     data-bs-toggle="modal" data-bs-target="#editmodal{{$doc->id}}">
@@ -500,15 +503,10 @@
                                 <td>
                                     <div class="col-lg-6 col-12">
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                                @if ($doc->estado==1)
-                                                <button type="button" class="btn btn-icon btn-warning waves-effect waves-float waves-light"
-                                                disabled>
-                                                <i data-feather='edit'> </i></button>
-                                                @else
-                                                <a type="button" class="btn btn-icon btn-warning waves-effect waves-float waves-light"
-                                                data-bs-toggle="modal" data-bs-target="#editmodal{{$doc->id}}">
+                                               
+                                                <a type="button" class="btn btn-icon btn-warning waves-effect waves-float
+                                                waves-light" href="{{route('admin.solicitudes.editar',$doc->id)}}">
                                                 <i data-feather='edit'> </i></a>
-                                                @endif
                                                 <a type="button" class="btn btn-icon btn-danger waves-effect waves-float waves-light"
                                                 data-bs-toggle="modal" data-bs-target="#eli{{$doc->id}}">
                                                     <i data-feather='trash-2'></i></a>
@@ -558,6 +556,8 @@
                                 <th style="width: 40px">UNIDAD</th>
                                 <th style="width: 40px">PLACA</th>
                                 <th style="width: 40px">CHOFER</th>
+                                
+                                <th style="font-size: 10px;width: 40px">INDICACIONES<br> ESPECIALES</th>
                                 <th style="width: 40px">ASIG</th>
                                 {{-- <th>LAVADO</th>
                                 <th>N° COMP.</th> --}}
@@ -650,6 +650,7 @@
                                                         @else
                                                         @endif
                                                     @endforeach
+                                                    <td>{{$pla->observaciones}}</td>
                                                 @else
                                                 @endif
                                         @endforeach
@@ -657,6 +658,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
+
                                     @endif
                                 <td>
                                     @if ($doc->estado==3) 
@@ -664,7 +667,7 @@
                                         data-bs-toggle="modal" data-bs-target="#crearcierre{{$doc->id}}">
                                         <i data-feather='plus'></i>
                                         </button>
-                                        @elseif ($doc->estado==4) 
+                                        @elseif ($doc->estado==4 || $doc->estado==5) 
                                         <button type="button" class="btn btn-danger btn-icon rounded-circle"
                                         data-bs-toggle="modal" data-bs-target="#detcierre{{$doc->id}}">
                                         <i data-feather='download-cloud'></i>
@@ -684,7 +687,8 @@
                                                               @php
                                                             $datos_n_guias = json_decode($item->n_guias, true);
                                                             $datos_n_remision = json_decode($item->n_remision, true);
-                                                            @endphp
+                                                        //    $fecha = $item->indicaciones;
+                                                           @endphp
                                                 <td>
                                                     @foreach ($datos_n_guias as $item)
                                                     {{$item}} <br>
@@ -694,6 +698,7 @@
                                                     {{$item2}} <br>
                                                 @endforeach
                                                 </td>
+                                                {{-- <td>{{$fecha}}</td> --}}
                                         @endif
                                     @endforeach
                                 @else
@@ -737,7 +742,7 @@
         <div class="col-12">
             <div class="card p-1">
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered dt-responsive table-sm" id="solicitudes3">
+                    <table class="table table-striped table-bordered table-sm" id="solicitudes3">
                         <thead class="text-center">
                             <tr >
                                 {{-- <th>ID</th> --}}
@@ -764,7 +769,7 @@
                                 <th style="font-size: 8px;width: 20px">FECHA DE <br> FACTURACIÓN</th>
                                 <th style="font-size: 8px;width: 20px">N° FACTURACIÓN</th>
                                 <th style="font-size: 10px;width: 40px">ESTADO</th>
-                                {{-- <th>ACCIONES</th> --}}
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -891,14 +896,20 @@
                                         </button>
                                     </td>
                                     <td></td>
-                                    @endif
-                                    @if ($doc->estado==5)
-                                    @foreach ($cierres as $item)
-                                        @if ($doc->id_cierre==$item->id)
-                                                <td> {{$item->fecha_fac}}</td>
-                                                <td> {{$item->n_fac}}</td>
-                                        @endif
-                                    @endforeach
+                                    @elseif ($doc->estado==5)
+                                        @foreach ($cierres as $item)
+                                            @if ($doc->id_cierre==$item->id)
+                                                    <td> {{$item->fecha_fac}}</td>
+                                                    <td> {{$item->n_fac}}</td>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                    <td> <button type="button" class="btn btn-secondary btn-icon rounded-circle"
+                                        data-bs-toggle="modal" data-bs-target="#editcierre{{$doc->id}}" disabled>
+                                        <i data-feather='plus'></i>
+                            </button>
+                        </td>
+                                    <td></td>
                                     @endif
                                 <td>
                                     @if ($doc->estado==1)
@@ -913,10 +924,23 @@
                                     <span class="badge bg-danger">Pendiente Asig.</span>
                                     @endif
                                 </td>
-                                {{-- <td><i data-feather='edit'></i>Editar</td> --}}
+                                <td>
+                                    @if ($doc->estado==5)
+                                    <button type="button" class="btn btn-secondary btn-icon rounded-circle"
+                                    data-bs-toggle="modal" data-bs-target="#editcierre2{{$doc->id}}">
+                                    <i data-feather='edit'></i>
+                                </button> 
+                                    @else
+                                    <button type="button" class="btn btn-secondary btn-icon rounded-circle"
+                                  disabled>
+                                    <i data-feather='edit'></i>
+                                </button> 
+                                    @endif
+                                    
+                                </td>
                             </tr>
                             @include('admin.modals.ActualizarCierre')
-                           
+                            @include('admin.modals.ActualizarCierre2')
                             @endforeach
                         </tbody>
                     </table>
@@ -1197,16 +1221,16 @@ var idioma=
                         extend: 'excel',
                         text: feather.icons['file'].toSvg({ class: 'font-small-4 me-50' }) + 'Excel',
                         className: 'btn btn-sm btn-info round waves-effect',
-                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12] }
+                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16] }
                         },
                         {
                             extend: 'print',
                         text: feather.icons['printer'].toSvg({ class: 'font-small-4 me-50' }) + 'Print',
                         className: 'btn btn-sm btn-info round waves-effect',
-                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12] }
+                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16] }
                         },
                     ],
-                    "order": [[ 4, 'asc' ], [ 5, 'asc' ]],
+                    "order": [[ 0, 'desc' ], [ 2, 'asc' ]],
                     exportOptions: {
                     modifier: {
                     // DataTables core
@@ -1215,7 +1239,7 @@ var idioma=
                     page: 'all', // 'all', 'current'
                     search: 'none' // 'none', 'applied', 'removed'
                     },
-                        columns: [0,1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12]
+                        columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16]
                         
                     }
                 })

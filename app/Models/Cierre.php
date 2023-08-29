@@ -14,6 +14,8 @@ class Cierre extends Model
         'datos_remision',
         'n_remision',
         'indicaciones',
+        'fecha_fac',
+        'n_fac',
         'km_inicial',
         'km_final'
     ];

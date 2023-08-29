@@ -100,6 +100,10 @@ Route::delete('/DeleteTarifa/{id}', [AdminController::class, 'delete_tarifa'])->
 Route::get('/nuevaSolicitud', [AdminController::class, 'show_agregar_soli'])->name('admin.solicitudes.nueva-solicitud');
 Route::post('crearSolicitud', [AdminController::class, 'create_crear_soli'])->name('admin.crear-solicitud');
 Route::delete('/DeleteSoli', [AdminController::class, 'delete_solicitud'])->name('delete-solicitud');
+Route::get('IdEditSolicitud/{id}', [AdminController::class, 'edit_solicitud'])->name('admin.solicitudes.editar');
+Route::post('/UpdateSolicitud', [AdminController::class, 'update_solicitud'])->name('update-solicitud');
+
+
 Route::get('/solicitudes', [AdminController::class, 'listarsolicitudes'])->name('admin.solicitudes.index');
 // Route::get('/BuscarDesSoli', [AdminController::class, 'buscardestino3'])->name('buscardestino3');
 Route::get('/BuscarDesSoli', [AdminController::class, 'buscarclientexdestino'])->name('buscarclientexdestino');

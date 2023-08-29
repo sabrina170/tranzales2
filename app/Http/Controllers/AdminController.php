@@ -697,6 +697,17 @@ class AdminController extends Controller
             // $alu['image'] = "$profileImage";
         }
 
+        if ($request->get('brevete_cho') == null) {
+            $brevete_cho = "";
+        } else {
+            $brevete_cho = $request->get('brevete_cho');
+        }
+        if ($request->get('fecha_ven_cho') == null) {
+            $fecha_ven_cho = "";
+        } else {
+            $fecha_ven_cho = $request->get('fecha_ven_cho');
+        }
+
         $data = [
             'unidad' => $request->get('unidad'),
             'nombres_cho'  => $request->get('nombres_cho'),
@@ -704,8 +715,8 @@ class AdminController extends Controller
             'tipo_contrato' => $request->get('tipo_contrato'),
             'dni_cho' => $request->get('dni_cho'),
             'estado_cho' => 1,
-            'brevete_cho' => $request->get('brevete_cho'),
-            'fecha_ven_cho' => $request->get('fecha_ven_cho'),
+            'brevete_cho' => $brevete_cho,
+            'fecha_ven_cho' => $fecha_ven_cho,
             'celular_cho' => $request->get('celular_cho'),
             'tipo_cho' => $request->get('tipo_cho'),
             'telefono_emer' => $request->get('telefono_emer'),
@@ -719,7 +730,7 @@ class AdminController extends Controller
         $mensaje = "Usuario creado exitosamente";
         return redirect()->route('admin.choferes.index')->with(['data' => $mensaje]);
     }
-    public function edit_chofer(Vehiculo $vehiculo, $id)
+    public function edit_chofer(Chofere $chofer, $id)
     {
         // dd($id);
         $usuario  = DB::table('users')->where('id', $id)->limit(1)->get();
@@ -727,23 +738,23 @@ class AdminController extends Controller
         // dd($vehiculo);
         return view('admin.usuarios.edit-usuario', compact('usuario'));
     }
-    public function update_chofer(Request $request, User $usuario)
+    public function update_chofer(Request $request, Chofere $usuario)
     {
 
         $us = $request->all();
         // dd($data);
         $usuario->update($us);
         $mensaje = "Usuario actualizado exitosamente";
-        return redirect()->route('admin.vehiculos.edit-vehiculo', $usuario)->with(['data' => $mensaje]);
+        return redirect()->route('admin.choferes.index', $usuario)->with(['data' => $mensaje]);
         // return back()->withInput();
     }
-    public function delete_chofer(User $id)
+    public function delete_chofer(Chofere $id)
     {
         // dd($id);
         $id->delete();
-        $usuarios = DB::table('users')->orderBy('id', 'desc')->get();
-
-        return redirect()->route('admin.usuarios.index');
+        $usuarios = DB::table('choferes')->orderBy('id', 'desc')->get();
+        $mensaje = "Chofer eliminado exitosamente";
+        return redirect()->route('admin.choferes.index')->with(['data' => $mensaje]);
         // dd($vehiculo);
     }
     // -------------------BUSCADORES DE RUTAS-----------------------------------------------------
@@ -1137,6 +1148,15 @@ class AdminController extends Controller
             $indicaciones = $request->get('indicaciones');
         }
 
+        if ($request->get('fecha_fac') == null) {
+            $fecha_fac = "";
+        } else {
+            $fecha_fac = $request->get('fecha_fac');
+        }
+        if ($request->get('n_fac') == null) {
+            $n_fac = "";
+        }
+
         $solicitudes = DB::table('solicitudes')->where('id', $id_soli)->orderBy('id', 'desc')->get();
         foreach ($solicitudes as $col) {
             $datos_destinos = $col->datos_destinos;
@@ -1166,13 +1186,14 @@ class AdminController extends Controller
             $n_remision[] = $request->get('n_remision' . $key);
         }
 
-        $fecha_fac = NULL;
-        $n_fac = "";
+
         $data = [
             'datos_guias' => json_encode($arr, true),
             'n_guias' => json_encode($n_gruias, true),
             'datos_remision' => json_encode($arr2, true),
             'n_remision' => json_encode($n_remision, true),
+            'fecha_fac'  => $fecha_fac,
+            'n_fac'  => $n_fac,
             'km_inicial'  => $request->get('km_inicial'),
             'km_final'  => $request->get('km_final'),
             'indicaciones'  => $indicaciones
@@ -1493,5 +1514,64 @@ class AdminController extends Controller
 
         $mensaje = "Solicitud eliminada correctamente";
         return redirect()->route('admin.solicitudes.index')->with(['data' => $mensaje]);
+    }
+
+    public function edit_solicitud(Solicitude $solicitud, $id)
+    {
+        // dd($id);
+        $solicitud  = DB::table('solicitudes')->where('id', $id)->limit(1)->get();
+        $clientes = DB::table('clientes')->orderBy('id', 'desc')->get();
+        $destinos = DB::table('destinos')->orderBy('id', 'desc')->get();
+        // dd($vehiculo);
+        return view('admin.solicitudes.editar', compact('solicitud', 'clientes', 'destinos'));
+    }
+    public function update_solicitud(Request $request)
+    {
+        $id_soli = $request->get('id_soli');
+        $obs = $request->get('observaciones');
+        $n_com = $request->get('comprobante');
+        if (empty($obs) || empty($n_com)) {
+            $observaciones = "";
+            $comprobante = "";
+        } else {
+            $observaciones = $request->get('observaciones');
+            $comprobante = $request->get('comprobante');
+        }
+
+        $datos_estructura = array(
+            'cant1' => $request->get('datos_cantidad1'),
+            'cant2' => $request->get('datos_cantidad2'),
+            'cant3' => $request->get('datos_cantidad3'),
+            'cant4' => $request->get('datos_cantidad4'),
+            'sub' => $request->get('subtotal'),
+        );
+        // $data = [
+        //     'fecha_solicitud' => $request->get('fecha_solicitud'),
+        //     'fecha_traslado' => $request->get('fecha_traslado'),
+        //     'hora' => $request->get('hora'),
+        //     'hora_cochera' => $request->get('hora_cochera'),
+        //     'cantidad' => $request->get('cantidad'),
+        //     'datos_destinos' => json_encode($request->get('datos_destinos')),
+        //     'datos_cantidad' => json_encode($datos_estructura),
+        //     'observaciones' =>  $observaciones,
+        //     'lavado' => $request->get('lavado'),
+        //     'comprobante' => $comprobante
+        // ];
+
+        DB::table('solicitudes')->where('id', $id_soli)->limit(1)->update([
+            'fecha_solicitud' => $request->get('fecha_solicitud'),
+            'fecha_traslado' => $request->get('fecha_traslado'),
+            'hora' => $request->get('hora'),
+            'hora_cochera' => $request->get('hora_cochera'),
+            'cantidad' => $request->get('cantidad'),
+            // 'datos_destinos' => json_encode($request->get('datos_destinos')),
+            'datos_cantidad' => json_encode($datos_estructura),
+            'observaciones' =>  $observaciones,
+            'lavado' => $request->get('lavado'),
+            'comprobante' => $comprobante
+        ]);
+        // dd($data);
+        $mensaje = "Solicitud Actualizada";
+        return redirect()->route('admin.solicitudes.editar', $id_soli)->with(['data' => $mensaje]);
     }
 }

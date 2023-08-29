@@ -48,7 +48,7 @@
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label" for="first-name-column">
-                                                   N° Guia Emisión</label>
+                                                   N° Guia Remisión</label>
                                                 <input type="text" id="first-name-column"
                                                 class="form-control" name="n_remision{{$des->id}}" required>
                                             </div>
@@ -56,7 +56,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label" for="first-name-column">
-                                                    Guia Emisión</label>
+                                                    Guia Remisión</label>
                                                 <input type="file" id="first-name-column"
                                                 class="form-control" name="remision{{$des->id}}" accept=".pdf" required>
                                             </div>
@@ -92,6 +92,10 @@
                                 </div>
                         </div>
             </div>
+            <input type="hidden" id="first-name-column"
+            class="form-control" name="fecha_fac" value="{{date("Y-m-d");}}">
+            <input type="hidden" id="first-name-column"
+            class="form-control" name="n_fac" value="">
 
             <div class="modal-footer">
                 <input type="hidden" name="id_soli" value="{{$doc->id}}" readonly>

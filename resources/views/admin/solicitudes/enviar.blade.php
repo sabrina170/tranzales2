@@ -53,10 +53,10 @@
                                                         <td colspan="{{$cont}}"><strong>{{$date->format('d-m-Y')}}</strong></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="table-warning">
+                                                        <td style="background: rgb(243, 128, 128)">
                                                             <strong>HORA EN COCHERA</strong>
                                                         </td>
-                                                        <td class="table-warning" colspan="{{$cont}}"><strong>{{$doc->hora_cochera}}</strong></td>
+                                                        <td style="background: rgb(243, 128, 128)" colspan="{{$cont}}"><strong>{{$doc->hora_cochera}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="table-light">
@@ -230,11 +230,11 @@
                                                             @endif
                                                         @endforeach
                                                         <tr>
-                                                            <td class="table-light">
-                                                                <strong class="text-danger">Indicaciones Especiales</strong>
+                                                            <td style="background: rgb(243, 128, 128)">
+                                                                <strong>Indicaciones Especiales</strong>
                                                             </td>
-                                                            <td>
-                                                                <strong> {{$pla->observaciones}}</strong> 
+                                                            <td style="background: rgb(243, 128, 128)">
+                                                                <strong > {{$pla->observaciones}}</strong> 
                                                             </td>
                                                         </tr>
                                                     @else

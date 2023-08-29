@@ -88,12 +88,7 @@
                             <input type="file" id="first-name-column" class="form-control" name="dni_doc" required>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
-                        <div class="mb-1">
-                            <label class="form-label" for="city-column">Brevete</label>
-                            <input type="text" id="city-column" class="form-control" placeholder="AKJ888" name="brevete_cho" required>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-3 col-12">
                         <div class="mb-1">
                             <label class="form-label" for="country-floating">Tipo de contrato</label>
@@ -109,7 +104,7 @@
                             <input type="file" id="first-name-column" class="form-control" name="contrato_doc" required>
                         </div>
                     </div>
-                    <div class="col-md-3 col-12">
+                    <div class="col-md-4 col-12">
                         <div class="mb-1">
                             <label class="form-label" for="city-column">Telefono Emergencia</label>
                             <input type="text" id="city-column" class="form-control" placeholder="AKJ888" name="telefono_emer" required>
@@ -126,6 +121,12 @@
                         <div class="mb-1">
                             <label class="form-label" for="email-id-column">Fecha Inicio</label>
                             <input type="date" id="email-id-column" class="form-control" name="fecha_inicio"  required>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="mb-1">
+                            <label class="form-label" for="city-column">Brevete</label>
+                            <input type="text" id="city-column" class="form-control" placeholder="AKJ888" name="brevete_cho">
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
@@ -188,13 +189,13 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                     <a type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#view{{$doc->id}}"><i data-feather='eye'></i></a>
-                                    {{-- <a type="button" class="btn btn-dark btn-sm" href="{{route('admin.vehiculos.edit-vehiculo',$doc->id)}}"><i data-feather='edit'></i></a>
-                                    <a type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eli{{$doc->id}}"><i data-feather='trash-2'></i></a> --}}
+                                    {{-- <a type="button" class="btn btn-dark btn-sm" href="{{route('admin.vehiculos.edit-vehiculo',$doc->id)}}"><i data-feather='edit'></i></a> --}}
+                                    <a type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#elichofer{{$doc->id}}"><i data-feather='trash-2'></i></a>
                                     </div>
                                 </td>
                             </tr>
                             @include('admin.modals.modaldetchofer')
-                            {{-- @include('admin.modals.modalelivehi') --}}
+                            @include('admin.modals.EliChofer')
                             @endforeach
                         </tbody>
                     </table>
