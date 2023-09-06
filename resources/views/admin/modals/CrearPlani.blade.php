@@ -46,6 +46,8 @@
                                 @foreach ($ayudantes as $ayu)
                                 <option value="{{$ayu->id}}"> {{$ayu->nombres_cho}} {{$cho->apellidos_cho}} - {{$ayu->dni_cho}}</option>
                                 @endforeach   
+                                <option value="0">Ninguno</option>
+
                             </select>
                         </div>
                         <div class="col-md-4 mb-1">

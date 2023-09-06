@@ -203,6 +203,7 @@
                                         <option value="" selected>Selecione un lavado</option>
                                         <option value="Lurin" >Lurin</option>
                                         <option value="Ventanilla" >Ventanilla</option>
+                                        <option value="Ninguno" >Ninguno</option>
                                     </select>
                                 </div>
                             </div>

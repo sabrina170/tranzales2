@@ -38,7 +38,7 @@
     <div class="table-responsive">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-sm" 
-                    id="tablamaestro" style="display: none ">
+                    id="tablamaestro" style="display: none">
                         <thead class="text-center">
                             <tr>
                                 {{-- <th>ID</th> --}}
@@ -54,7 +54,6 @@
                                 <th style="font-size: 10px;width: 40px">PLACA</th>
                                 <th style="font-size: 10px;width: 40px">CHOFER</th>
                                 <th style="font-size: 10px;width: 40px">AYUDANTE</th>
-                                
                                 <th style="font-size: 10px;width: 40px">JORNADA DE AYUDANTE</th>
                                 <th style="font-size: 10px;width: 40px">LAVADO</th>
                                 <th style="font-size: 10px;width: 40px">N° COMPROBANTE</th>
@@ -64,7 +63,6 @@
                                 <th style="font-size: 10px;width: 40px">GUIA DE TERCEROS</th>
                                 <th style="font-size: 10px;width: 40px">GUIA DE TRANSPORTISTA</th>
                                 <th style="font-size: 10px;width: 40px">GUIA DE CLIENTE </th>
-
                                 <th style="font-size: 10px;width: 40px">REVISADO POR</th>
                                 <th style="font-size: 10px;width: 40px">PAGO DE CHOFER</th>
                                 <th style="font-size: 10px;width: 40px">PAGO AYUDANTE</th>
@@ -78,13 +76,11 @@
                                 <th style="font-size: 10px;width: 40px">PEAJE EASY WAY</th>
                                 <th style="font-size: 10px;width: 40px">OTRO PEAJES(**)</th>
                                 <th style="font-size: 10px;width: 40px">BALANZA2</th>
-
                                 <th style="font-size: 10px;width: 40px">GASTOS (EXTRAS)(**)</th>
                                 <th style="font-size: 10px;width: 40px">CONTEXTO GASTO EXTRA</th>
                                 <th style="font-size: 10px;width: 40px">LAVADERO (INICIO DE LAVADO)</th>
                                 <th style="font-size: 10px;width: 40px">TURNO</th>
                                 <th style="font-size: 10px;width: 40px">COSTO LAVADO Y DESINFECCION</th>
-
                                 <th style="font-size: 10px;width: 40px">CANTIDAD DE COMBUSTIBLE RECARGADO</th>
                                 <th style="font-size: 10px;width: 40px">PRECIO DEL COMBUSTIBLE</th>
                                 <th style="font-size: 10px;width: 40px">COMBUSTIBLE RECARGADO</th>
@@ -94,16 +90,12 @@
                                 <th style="font-size: 10px;width: 40px">FECHA FACTURACION</th>
                                 <th style="font-size: 10px;width: 40px">N° FACTURA</th>
                                 <th style="font-size: 10px;width: 40px">FACTURADO</th>
-
                                 <th style="font-size: 10px;width: 40px">KM INICIAL</th>
                                 <th style="font-size: 10px;width: 40px">HORA INICIAL</th>
                                 <th style="font-size: 10px;width: 40px">KM FINAL</th>
                                 <th style="font-size: 10px;width: 40px">HORA FINAL</th>
                                 <th style="font-size: 10px;width: 40px">KM RECORRIDO</th>
                                 <th style="font-size: 10px;width: 40px">OBSERVACIONES</th>
-                                {{-- <th>LAVADO</th>
-                                <th>N° COMP.</th> --}}
-                             
                                 <th style="font-size: 10px">ESTADO</th>
 
                                 {{-- <th>CIERRE</th> --}}
@@ -173,16 +165,22 @@
                                 <td>
                                     @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
                                         @foreach ($planificaciones as $pla)
-                                            @if ($pla->id ==$doc->id_plani)
-                                                        @foreach ($ayudantes as $ayu)
-                                                            @if ($ayu->id==$pla->choferes)
-                                                            {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}
-                                                            @else
-                                                            @endif
-                                                        @endforeach
-                                                    - <strong>{{$pla->tipo_des}}</strong>
-                                            @else
-                                            @endif
+                                            @if ($pla->choferes==0)
+                                            Ninguno
+                                        @else
+                                             @if ($pla->id ==$doc->id_plani)
+                                                         @foreach ($ayudantes as $ayu)
+                                                             @if ($ayu->id==$pla->choferes)
+                                                                 
+                                                                 {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}
+                                                             
+                                                             @else
+                                                             @endif
+                                                         @endforeach
+                                                     - <strong>{{$pla->tipo_des}}</strong>
+                                             @else
+                                             @endif
+                                         @endif
                                         @endforeach
                                     @else
                                     -
@@ -204,33 +202,38 @@
                                     @endif
                                 </td>
                                 <td>-</td>
-                                {{-- GUIAS --}}
                                 
                                 <td>{{$doc->hora_cochera}}</td>
                                 <td>-</td>
                                
-                                    @foreach ($cierres as $item)
-                                    {{-- @foreach ($item->datos_guias as $des) --}}
-                                        @if ($doc->id_cierre==$item->id)
-                                                              @php
-                                                            $datos_n_guias = json_decode($item->n_guias, true);
-                                                            $datos_n_remision = json_decode($item->n_remision, true);
-                                                            @endphp
-                                                <td>
-                                                    @foreach ($datos_n_guias as $item)
-                                                    {{$item}} <br>
-                                                    @endforeach
-                                                </td>
-                                                <td>
-                                                    @foreach ($datos_n_remision as $item2)
-                                                    {{$item2}} <br>
-                                                    @endforeach
-                                                </td>
-                                        @else
-                                        <td>-</td>
-                                        <td>-</td>
-                                        @endif
-                                    @endforeach
+                                    {{-- GUIAS --}}
+                               @if ($doc->id_cierre==0)
+                               <td>-</td>
+                               <td>-</td>
+                               @else
+                                @foreach ($cierres as $item)
+                                {{-- @foreach ($item->datos_guias as $des) --}}
+                                    @if ($doc->id_cierre==$item->id)
+                                                            @php
+                                                        $datos_n_guias = json_decode($item->n_guias, true);
+                                                        $datos_n_remision = json_decode($item->n_remision, true);
+                                                        @endphp
+                                            <td>
+                                                @foreach ($datos_n_guias as $item)
+                                                {{$item}} <br>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($datos_n_remision as $item2)
+                                                {{$item2}} <br>
+                                                @endforeach
+                                            </td>
+                                    @else
+                                    
+                                    @endif
+                                @endforeach
+                               @endif
+                                    
                                
                                 {{-- FIN GUIAS --}}
                                 <td>-</td>
@@ -242,7 +245,7 @@
                                 <td>-</td>
                                 <td>
                                     @if ($doc->id_peaje==0)
-                                    0.00
+                                    0.0034312
                                     @else
                                         @foreach ($peajes as $item)
                                         {{-- @foreach ($item->datos_guias as $des) --}}
@@ -253,13 +256,14 @@
                                         @endforeach
                                     @endif
                                 </td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                {{-- INICIO BALANZA --}}
                                 <td>
                                     @if ($doc->id_balanza==0)
-                                    0.00
+                                    0.000
                                     @else
                                         @foreach ($balanzas as $ba)
                                         {{-- @foreach ($item->datos_guias as $des) --}}
@@ -272,15 +276,17 @@
                                 </td>
                                 {{-- FIN DE BALANAZAS --}}
                                 <td>0.00</td>
-                                <td>-</td>
+                                <td>bala</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
                                 {{-- COMBUSTIBLES --}}
+                               
                                 @if ($doc->id_combustible==0)
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                
+                                <td>0</td>
+                                <td>0.00</td>
+                                <td>0</td>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -470,15 +476,21 @@
                                 <td>
                                     @if ($doc->estado==3 || $doc->estado==4 || $doc->estado==5) 
                                         @foreach ($planificaciones as $pla)
-                                            @if ($pla->id ==$doc->id_plani)
-                                                        @foreach ($ayudantes as $ayu)
-                                                            @if ($ayu->id==$pla->choferes)
-                                                            {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}
-                                                            @else
-                                                            @endif
-                                                        @endforeach
-                                                    - <strong>{{$pla->tipo_des}}</strong>
-                                            @else
+                                             @if ($pla->choferes==0)
+                                               Ninguno
+                                              @else
+                                                    @if ($pla->id ==$doc->id_plani)
+                                                                @foreach ($ayudantes as $ayu)
+                                                                    @if ($ayu->id==$pla->choferes)
+                                                                        
+                                                                        {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}
+                                                                    
+                                                                    @else
+                                                                    @endif
+                                                                @endforeach
+                                                            - <strong>{{$pla->tipo_des}}</strong>
+                                                    @else
+                                                    @endif
                                             @endif
                                         @endforeach
                                     @else
@@ -1191,7 +1203,8 @@ var idioma=
                         extend: 'excel',
                         text: feather.icons['file'].toSvg({ class: 'font-small-4 me-50' }) + 'Excel Maestro',
                         className: 'btn btn-sm btn-success round waves-effect',
-                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12] }
+                        exportOptions: { columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,
+                            32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53] }
                         }
 
                     ],
@@ -1204,7 +1217,8 @@ var idioma=
                     page: 'all', // 'all', 'current'
                     search: 'none' // 'none', 'applied', 'removed'
                     },
-                        columns: [0,1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12]
+                        columns: [0,1,2,3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,
+                            32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53]
                         
                     }
                 })

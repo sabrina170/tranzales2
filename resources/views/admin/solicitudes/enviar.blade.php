@@ -216,19 +216,34 @@
                                                             @else
                                                             @endif
                                                         @endforeach
+                                                       
+                                                        @if ($pla->choferes==0)
+                                                        <tr>
+                                                            <td class="table-light">
+                                                                <strong>AYUDANTE</strong>
+                                                            </td>
+                                                            <td>
+                                                                <strong> Ninguno</strong> 
+                                                            </td>
+                                                        </tr>
+                                                        @else
                                                         @foreach ($ayudantes as $ayu)
-                                                            @if ($ayu->id==$pla->choferes)
-                                                            <tr>
-                                                                <td class="table-light">
-                                                                    <strong>AYUDANTE</strong>
-                                                                </td>
-                                                                <td>
-                                                                    <strong> {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}</strong> 
-                                                                </td>
-                                                            </tr>
-                                                            @else
-                                                            @endif
-                                                        @endforeach
+                                                                @if ($ayu->id==$pla->choferes)
+
+                                                                <tr>
+                                                                    <td class="table-light">
+                                                                        <strong>AYUDANTE</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        <strong> {{$ayu->nombres_cho}} {{$ayu->apellidos_cho}}</strong> 
+                                                                    </td>
+                                                                </tr>
+                                                                @else
+                                                                @endif
+                                                                @endforeach
+                                                        @endif
+                                                            
+                                                        
                                                         <tr>
                                                             <td style="background: rgb(243, 128, 128)">
                                                                 <strong>Indicaciones Especiales</strong>

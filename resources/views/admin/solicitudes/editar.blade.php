@@ -204,9 +204,15 @@
                                         @if ($item->lavado=="Lurin")
                                         <option value="Lurin" selected>Lurin</option>
                                         <option value="Ventanilla" >Ventanilla</option>
-                                        @else
+                                        <option value="Ninguno" >Ninguno</option>
+                                        @elseif ($item->lavado=="Ventanilla")
                                         <option value="Lurin">Lurin</option>
                                         <option value="Ventanilla" selected>Ventanilla</option>
+                                        <option value="Ninguno" >Ninguno</option>
+                                        @else
+                                        <option value="Lurin">Lurin</option>
+                                        <option value="Ventanilla">Ventanilla</option>
+                                        <option value="Ninguno" selected>Ninguno</option>
                                         @endif
                                     </select>
                                 </div>
